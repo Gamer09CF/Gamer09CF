@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .container {
+            width: 50%;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background: #f9f9f9;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        input, select, button {
+            margin: 5px;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Voting System</h2>
+
+    <!-- Add Candidate Section -->
+    <h3>Add a Candidate</h3>
+    <input type="text" id="newCandidate" placeholder="Candidate Name">
+    <button onclick="addCandidate()">Add</button>
+
+    <!-- Voting Section -->
+    <h3>Vote for Your Candidate</h3>
+    <input type="text" id="voterName" placeholder="Enter your name">
+    <select id="candidateList"></select>
+    <button onclick="castVote()">Vote</button>
+
+    <!-- Voting Results -->
+    <h3>Voting Results</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Voter</th>
+                <th>Voted For</th>
+            </tr>
+        </thead>
+        <tbody id="results"></tbody>
+    </table>
+</div>
+
+<script>
+    let candidateList = document.getElementById("candidateList");
+
+    function addCandidate() {
+        let candidateName = document.getElementById("newCandidate").value.trim();
+        if (candidateName === "") {
+            alert("Please enter a candidate name.");
+            return;
+        }
+
+        // Check if candidate already exists
+        for (let option of candidateList.options) {
+            if (option.value === candidateName) {
+                alert("Candidate already exists.");
+                return;
+            }
+        }
+
+        let option = document.createElement("option");
+        option.text = candidateName;
+        option.value = candidateName;
+        candidateList.appendChild(option);
+
+        document.getElementById("newCandidate").value = ""; // Clear input
+    }
+
+    function castVote() {
+        let name = document.getElementById("voterName").value.trim();
+        let candidate = candidateList.value;
+        
+        if (name === "") {
+            alert("Please enter your name before voting.");
+            return;
+        }
+
+        let table = document.getElementById("results");
+        let row = table.insertRow();
+        let cell1 = row.insertCell(0);
+        let cell2 = row.insertCell(1);
+        
+        cell1.textContent = name;
+        cell2.textContent = candidate;
+
+        document.getElementById("voterName").value = ""; // Clear name input
+    }
+</script>
+
+</body>
+</html>
